@@ -1,0 +1,4 @@
+<%= form_tag(patientsearch_path, method: :get) do %>       
+	<%= text_field_tag(:query1, params[:query1]) %>    
+	<%= submit_tag "Search" %>
+<% end %>

@@ -1,0 +1,79 @@
+
+</head>
+<body>
+<% if signed_in? or doctorsigned_in? or nursesigned_in? %>
+	<h1>Listing prescriptions</h1>
+
+	<table class="table table-hover">
+	  <thead>
+		<tr>
+		  <th>Prescription details</th>
+		  <th>Prescription date</th>
+		  <th>Price</th>
+		  <th>Patient</th>
+		  <th>Doctor</th>
+		  <th>Prescription Total</th>
+		  <th colspan="3"></th>
+		</tr>
+	  </thead>
+
+	  <tbody>
+	  <% running_total = 0 %>
+	<% @prescriptions.each do |prescription| %>
+		<% if (signed_in? and prescription.patient_id == @current_patient.id) %>	
+			 <tr>
+			   <td><%= prescription.prescription_details %></td>
+			   <td><%= prescription.prescription_date %></td>
+			   <td><%= euro prescription.price %></td>
+			   <td><%= prescription.patient.email %></td>
+			   <td><%= prescription.doctor.name %></td>
+			   <td><%= euro(prescription.price) %></td>
+			   <% running_total = running_total + (prescription.price) %>
+			</tr>
+		<% end %>
+		<% if doctorsigned_in? %>
+			<tr>
+			   <td><%= prescription.prescription_details %></td>
+			   <td><%= prescription.prescription_date %></td>
+			   <td><%= euro prescription.price %></td>
+			   <td><%= prescription.patient.email %></td>
+			   <td><%= prescription.doctor.name %></td>
+				<td><%= link_to 'Show', prescription %></td>
+				<td><%= link_to 'Edit', edit_prescription_path(prescription) %></td>
+				<td><%= link_to 'Destroy', prescription, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+			
+			  </tr>
+		<% end %>
+		<% if nursesigned_in? %>
+			<tr>
+			   <td><%= prescription.prescription_details %></td>
+			   <td><%= prescription.prescription_date %></td>
+			   <td><%= euro prescription.price %></td>
+			   <td><%= prescription.patient.email %></td>
+			   <td><%= prescription.doctor.name %></td>
+				<td><%= link_to 'Show', prescription %></td>
+				<td><%= link_to 'Edit', edit_prescription_path(prescription) %></td>
+				<td><%= link_to 'Destroy', prescription, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+				
+		<% end %>
+		
+	<% end %>
+	
+
+  </tbody>
+</table>
+<br>
+
+<% if signed_in? %>
+<h4 class = "pull-right">Prescription Total: <%= euro( running_total) %></h4>
+<% end %>
+
+<% if doctorsigned_in? %>
+	<%= link_to 'New Prescription', new_prescription_path, :class=>'btn btn-success' %>
+	<%= link_to 'Apply Discount', discount_path, :class=>'btn btn-success' %>
+<% end %>
+
+<% else %>
+	
+	<%= link_to 'Please login ', login_path, :class=>'btn btn-success' %>
+<% end %>

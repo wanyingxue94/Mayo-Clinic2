@@ -1,0 +1,11 @@
+<h4> Enter discount rate here </h4>
+
+<%= form_tag(apply_discount_path, :method => 'get') do %>
+	<%= label_tag "Which Patient?" %>
+	<%= select_tag "patient", options_from_collection_for_select(@patients, "id", "email") %>
+	</br></br>
+	<%= label_tag "Discount Percentage" %>
+	<%= text_field_tag "discount" %>
+	</br>
+	<%= submit_tag 'Submit' %>
+<% end %>

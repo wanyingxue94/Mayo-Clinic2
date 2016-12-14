@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @nurse.name %>
+</p>
+
+<p>
+  <strong>Image:</strong>
+  <td><%= image_tag(@nurse.image,:size=>"100x70") %></td>
+</p>
+
+<p>
+  <strong>Year of service:</strong>
+  <%= @nurse.year_of_service %>
+</p>
+
+<p>
+  <strong>Phone:</strong>
+  <%= @nurse.phone %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @nurse.email %>
+</p>
+
+<%= link_to 'Edit', edit_nurse_path(@nurse) %> |
+<%= link_to 'Back', nurses_path %>

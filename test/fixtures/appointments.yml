@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2016-10-05
+  time: 2016-10-05 11:26:21
+  duration: MyString
+  appointment_reason: MyText
+  patient_id: 1
+  doctor_id: 1
+  nurse_id: 1
+
+two:
+  date: 2016-10-05
+  time: 2016-10-05 11:26:21
+  duration: MyString
+  appointment_reason: MyText
+  patient_id: 1
+  doctor_id: 1
+  nurse_id: 1

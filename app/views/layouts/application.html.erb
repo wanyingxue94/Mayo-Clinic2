@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mayo Clinic</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+	<div id = "banner">
+		<%= image_tag("home.jpg", :size => "100x50") %>
+		<%= "Mayo Clinic" %>
+	</div>
+	
+	
+    <nav role="navigation" class="navbar navbar-default">
+        <div class="container">
+            
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+               
+			</div>
+
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	 <ul class="nav navbar-nav">
+	 
+			
+		<li><%=link_to "Home", root_path %></li>
+		<li><%=link_to "Doctors", doctors_path%></li>
+		<li><%=link_to "Nurses", nurses_path%></li>
+		<li><%=link_to "Health Information", 'http://www.mayoclinic.org/patient-care-and-health-information' %></li>
+		
+		
+			<% if signed_in?  %>
+				<li><%=mail_to "C13491872@mydit.ie", "Contact us" %></li>
+				<li><%=link_to "Appointments", appointments_path%></li>
+				<li><%=link_to "Prescriptions", prescriptions_path%></li>
+				<li><%=link_to "View my details", patients_path %></li>
+				<li><%= link_to "Sign Out", logout_path %></li>
+				<li>Signed in as <%= @current_patient.first_name %></li>
+				<li><%= render '/doctors/search' %></li>
+				
+			<% elsif nursesigned_in? %>
+				<li><%=link_to "Patients", patients_path%></li>
+				<li><%=link_to "Appointments", appointments_path%></li>
+				<li><%=link_to "Prescriptions", prescriptions_path%></li>
+				<li>Signed in as <%= @current_nurse.name %></li>
+				<li><%= link_to "Sign Out", nurselogout_path %></li>
+				
+			<% elsif doctorsigned_in? %>
+				<li><%=link_to "Patients", patients_path%></li>
+				<li><%=link_to "Appointments", appointments_path%></li>
+				<li><%=link_to "Prescriptions", prescriptions_path%></li>
+				<li>Signed in as <%= @current_doctor.name %></li>
+				<li><%= link_to "Sign Out", doctorlogout_path %></li>
+				<li><%= render '/patients/patientsearch' %></li>
+			<% else %>
+				<li><%=link_to "Patient Register", new_patient_path %></li>
+				<li><%=link_to "Patient Login", login_path %></li>
+				<li><%=link_to "Doctor log in", secondlogin_path %></li>
+				<li><%=link_to "Nurse log in", nurselogin_path %></li>
+				<li><%= render '/doctors/search' %></li>
+			<% end %>
+	</ul>
+</div>
+
+
+</body>
+
+</html>
+
+<%= yield %>
+
+
+</body>
+</html>

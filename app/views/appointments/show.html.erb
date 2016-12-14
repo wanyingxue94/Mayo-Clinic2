@@ -1,0 +1,97 @@
+<p id="notice"><%= notice %></p>
+<div class="panel panel-default">
+<p>
+  <strong>Date:</strong>
+  <%= @appointment.date %>
+</p>
+
+<p>
+  <strong>Time:</strong>
+  <%= @appointment.time %>
+</p>
+
+<p>
+  <strong>Duration:</strong>
+  <%= @appointment.duration %>
+</p>
+
+<p>
+  <strong>Appointment reason:</strong>
+  <%= @appointment.appointment_reason %>
+</p>
+
+<p>
+  <strong>Patient First_Name:</strong>
+  <%= @appointment.patient.first_name %>
+  </br>
+  </br>
+  <strong>Patient Last_name:</strong>
+  <%= @appointment.patient.last_name %>
+  </br>
+</p>
+
+<p>
+  <strong>Doctor:</strong>
+  <%= @appointment.doctor.name %>
+</p>
+
+<p>
+  <strong>Nurse:</strong>
+  <%= @appointment.nurse.name %>
+</p>
+</div>
+<% if signed_in? %>
+	<div class="panel panel-default">
+	<h2>Star Rating and comment:</h2>
+		<%= form_for([@appointment, Comment.new]) do |f| %>
+		
+			<h3><%= f.label :stars %>
+			<% stars = [1,2,3,4,5] %>
+			<% stars.each do |star| %>
+			<%= f.radio_button :stars,star %><%= star %>
+			<% end %>
+			</h3></br>
+			<%= f.text_area :content, :rows => 4, :cols => 40 %>
+			<div class = "actions">
+			<%= f.submit "Post a Comment" %>
+			</div>
+		<% end %>
+	</div>
+	<% if @appointment.comments.empty? %>
+		<h3>You are the first to comment</h3>
+	<% else %>
+	<div class="panel panel-default">
+		<h2>What others felt about this:</h2>
+		<% @appointment.comments.reverse.each do |comment| %>
+			<p><%= comment.content %>
+			Posted <%= time_ago_in_words(comment.created_at) %>ago by
+			<%= comment.patient.first_name %></p>
+		<% end %>
+		<h3>Star Rating</h3>
+		<p>
+			<%= number_with_precision(@appointment.average_stars,precision:0) %>
+		</p>
+	</div>
+	<% end %>
+<% else %>
+	<% if @appointment.comments.empty? %>
+		<h3>You have no comment</h3>
+	<% else %>
+	<div class="panel panel-default">
+		<h2>What others felt about this:</h2>
+		<% @appointment.comments.reverse.each do |comment| %>
+			<p><%= comment.content %>
+			Posted <%= time_ago_in_words(comment.created_at) %>ago by
+			<%= comment.patient.first_name %></p>
+		<% end %>
+		<h3>Star Rating</h3>
+		<p>
+			<%= number_with_precision(@appointment.average_stars,precision:0) %>
+		</p>
+	</div>
+	<% end %>
+<% end %>
+
+
+<%= link_to 'Edit', edit_appointment_path(@appointment) %> |
+<%= link_to 'Back', appointments_path %>

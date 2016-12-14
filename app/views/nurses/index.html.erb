@@ -1,0 +1,40 @@
+
+</head>
+<body>
+
+<h1>Listing nurses</h1>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Name</th>
+	  <th>Image</th>
+      <th>Year of service</th>
+      <th>Phone</th>
+	  <th>Email</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @nurses.each do |nurse| %>
+      <tr>
+        <td><%= nurse.name %></td>
+		<td><%= image_tag(nurse.image,:size=>"100x70") %></td>
+        <td><%= nurse.year_of_service %></td>
+        <td><%= nurse.phone %></td>
+		<td><%= nurse.email %></td>
+		<% if nursesigned_in? or doctorsigned_in? %>
+			<td><%= link_to 'Show', nurse %></td>
+			<td><%= link_to 'Edit', edit_nurse_path(nurse) %></td>
+			<td><%= link_to 'Destroy', nurse, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+		<%end%>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<% if nursesigned_in? or doctorsigned_in? %>
+<%= link_to 'New Nurse', new_nurse_path, :class=>'btn btn-success' %>
+<% end %>

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  content: MyText
+  patient_id: 1
+  appointment_id: 1
+  stars: 1
+
+two:
+  content: MyText
+  patient_id: 1
+  appointment_id: 1
+  stars: 1

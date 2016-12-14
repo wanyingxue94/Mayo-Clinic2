@@ -1,0 +1,63 @@
+
+</head>
+<body>
+
+
+<% if signed_in? or doctorsigned_in? or nursesigned_in? %>
+<h1>Patient List</h1>
+
+<table class="table table-hover">
+
+  <thead>
+    <tr>
+      <th>First name</th>
+      <th>Last name</th>
+	  <th>Gender</th>
+      <th>Address</th>
+      <th>City</th>
+      <th>State</th>
+      <th>Date of birth</th>
+      <th>Phone</th>
+      <th>Email</th>
+	  <th>Download Link</th>
+	  <th>Regular</th>
+      
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @patients.each do |patient| %>
+		<% if (signed_in? and patient.id == @current_patient.id) or doctorsigned_in? or nursesigned_in? %>
+	
+      <tr>
+        <td><%= patient.first_name %></td>
+        <td><%= patient.last_name %></td>
+		<td><%= patient.gender? ? 'Female' : 'Male' %></td>
+        <td><%= patient.address %></td>
+        <td><%= patient.city %></td>
+        <td><%= patient.state %></td>
+        <td><%= patient.date_of_birth %></td>
+        <td><%= patient.phone %></td>
+        <td><%= patient.email %></td>
+		<td><%= link_to "Download File", patient.attachment_url %></td>
+		<td><%= yesno (patient.regular) %></td>
+		
+        
+        <td><%= link_to 'Show', patient %></td>
+        <td><%= link_to 'Edit', edit_patient_path(patient) %></td>
+        <td><%= link_to 'Destroy', patient, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+		
+	  </tr>
+		<% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<% if doctorsigned_in? or nursesigned_in? %>
+	<%= link_to 'New Patient', new_patient_path, :class=>'btn btn-success' %>
+<% end %>
+	<% else %>
+		<%= link_to 'Please login ', login_path, :class=>'btn btn-success' %>
+	<% end %>
